@@ -154,8 +154,14 @@ def kang(update: Update, context: CallbackContext):
                     emojis=sticker_emoji,
                 )
                 msg.reply_text(
-                    f"Sticker successfully added to [pack](t.me/addstickers/{packname})"
-                    + f"\nEmoji is: {sticker_emoji}",
+                    f"Sticker emoji: {sticker_emoji}",
+                    reply_markup=InlineKeyboardMarkup([
+                  [
+                    InlineKeyboardButton(text="Your pack", url=f"t.me/addstickers/{packname}")
+                  ],
+                
+                ]),
+                   
                     parse_mode=ParseMode.MARKDOWN,
                 )
 
@@ -185,8 +191,13 @@ def kang(update: Update, context: CallbackContext):
                         emojis=sticker_emoji,
                     )
                     msg.reply_text(
-                        f"Sticker successfully added to [pack](t.me/addstickers/{packname})"
-                        + f"\nEmoji is: {sticker_emoji}",
+                        f"Sticker emoji: {sticker_emoji}",
+                        reply_markup=InlineKeyboardMarkup([
+                                [
+                                    InlineKeyboardButton(text="Your pack", url=f"t.me/addstickers/{packname}")
+                                ],
+                
+                        ]),                         
                         parse_mode=ParseMode.MARKDOWN,
                     )
                 elif e.message == "Invalid sticker emojis":
@@ -228,10 +239,16 @@ def kang(update: Update, context: CallbackContext):
                     emojis=sticker_emoji,
                 )
                 msg.reply_text(
-                    f"Sticker successfully added to [pack](t.me/addstickers/{packname})"
-                    + f"\nEmoji is: {sticker_emoji}",
-                    parse_mode=ParseMode.MARKDOWN,
-                )
+                    f"Sticker emoji: {sticker_emoji}",
+                    reply_markup=InlineKeyboardMarkup([
+                                [
+                                    InlineKeyboardButton(text="Your pack", url=f"t.me/addstickers/{packname}")
+                                ],
+                
+                        ]),                    
+                    parse_mode=ParseMode.MARKDOWN)
+              
+                
             except TelegramError as e:
                 if e.message == "Stickerset_invalid":
                     makepack_internal(
@@ -292,10 +309,16 @@ def kang(update: Update, context: CallbackContext):
                 emojis=sticker_emoji,
             )
             msg.reply_text(
-                f"Sticker successfully added to [pack](t.me/addstickers/{packname})"
-                + f"\nEmoji is: {sticker_emoji}",
+                f"Sticker emoji: {sticker_emoji}",
+                reply_markup=InlineKeyboardMarkup([
+                                [
+                                    InlineKeyboardButton(text="Your pack", url=f"t.me/addstickers/{packname}")
+                                ],
+                
+                        ]),                    
                 parse_mode=ParseMode.MARKDOWN,
             )
+            
         except OSError as e:
             msg.reply_text("I can only kang images m8.")
             print(e)
@@ -414,8 +437,13 @@ def makepack_internal(
 
     if success:
         msg.reply_text(
-            "Sticker pack successfully created. Get it [here](t.me/addstickers/%s)"
-            % packname,
+            f"Sticker emoji: {sticker_emoji}",
+            reply_markup=InlineKeyboardMarkup([
+                                [
+                                    InlineKeyboardButton(text="Your pack", url=f"t.me/addstickers/%s" % packname)
+                                ],
+                
+                        ]),                    
             parse_mode=ParseMode.MARKDOWN,
         )
     else:
@@ -433,7 +461,7 @@ __help__ = """
 __mod_name__ = "Stickers"
 STICKERID_HANDLER = DisableAbleCommandHandler("stickerid", stickerid)
 GETSTICKER_HANDLER = DisableAbleCommandHandler("getsticker", getsticker)
-KANG_HANDLER = DisableAbleCommandHandler("kang", kang, admin_ok=True)
+KANG_HANDLER = DisableAbleCommandHandler(["kang", "steal"], kang, admin_ok=True)
 STICKERS_HANDLER = DisableAbleCommandHandler("stickers", cb_sticker)
 
 dispatcher.add_handler(STICKERS_HANDLER)
